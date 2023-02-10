@@ -2,15 +2,12 @@ package com.ronjeanfrancois.budget.controller;
 
 import java.util.List;
 
+import com.ronjeanfrancois.budget.dto.CategoryDto;
+import com.ronjeanfrancois.budget.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import com.ronjeanfrancois.budget.model.Category;
 import com.ronjeanfrancois.budget.repository.CategoryRepository;
@@ -18,13 +15,19 @@ import com.ronjeanfrancois.budget.repository.CategoryRepository;
 @RestController
 @RequestMapping("/api")
 public class CategoryController {
-  
-  @Autowired
+
   private CategoryRepository categoryRepository;
+  private CategoryService categoryService;
+
+  @Autowired
+  public CategoryController(CategoryRepository categoryRepository, CategoryService categoryService) {
+    this.categoryRepository = categoryRepository;
+    this.categoryService = categoryService;
+  }
 
   @GetMapping("/categories")
-  public List<Category> getCategories() {
-    return categoryRepository.findAll();
+  public ResponseEntity<List<CategoryDto>> getCategories() {
+    return new ResponseEntity<List<CategoryDto>>(categoryService.getAllCategories(), HttpStatus.OK);
   }
 
   @GetMapping("/categories/{name}")
@@ -33,8 +36,9 @@ public class CategoryController {
   }
 
   @PostMapping("/categories")
-  public Category createCategory(@RequestBody Category category) {
-    return categoryRepository.save(category);
+  @ResponseStatus(HttpStatus.CREATED)
+  public ResponseEntity<CategoryDto> createCategory(@RequestBody CategoryDto categoryDto) {
+    return new ResponseEntity<>(categoryService.createCategory(categoryDto), HttpStatus.CREATED);
   }
 
   @PutMapping("/categories/{id}")
