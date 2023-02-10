@@ -1,16 +1,15 @@
 package com.ronjeanfrancois.budget.controller;
 
 import java.util.List;
+import java.util.Optional;
 
+import com.ronjeanfrancois.budget.dto.UserDto;
+import com.ronjeanfrancois.budget.exceptions.DataNotFoundException;
+import com.ronjeanfrancois.budget.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import com.ronjeanfrancois.budget.model.UserEntity;
 import com.ronjeanfrancois.budget.repository.UserRepository;
@@ -19,31 +18,38 @@ import com.ronjeanfrancois.budget.repository.UserRepository;
 @RequestMapping("/api")
 public class UserController {
 
-  @Autowired
   private UserRepository userRepository;
+  private UserService userService;
 
-  @GetMapping("/users")
-  public List<UserEntity> getAllUsers() {
-    return userRepository.findAll();
+  @Autowired
+  public UserController(UserRepository userRepository, UserService userService) {
+    this.userRepository = userRepository;
+    this.userService = userService;
   }
 
-  @GetMapping("/users/{userName}")
-  public UserEntity getUserByUserName(@PathVariable String userName) {
-    return userRepository.findByUserName(userName);
+  @GetMapping("/users")
+  public ResponseEntity<List<UserDto>> getAllUsers() {
+    return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
+  }
+
+  @GetMapping("/users/{id}")
+  public Optional<UserEntity> getUserById(@PathVariable Long id) {
+    return Optional.ofNullable(userRepository.findById(id).orElseThrow(() -> new DataNotFoundException("User could not be found.")));
   }
 
   @PostMapping("/users")
-  public UserEntity createUser(@RequestBody UserEntity user) {
-    return userRepository.save(user);
+  @ResponseStatus(HttpStatus.CREATED)
+  public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
+    return new ResponseEntity<>(userService.createUser(userDto), HttpStatus.CREATED);
   }
 
-  @PutMapping("/{id}")
+  @PutMapping("/users/{id}")
   public UserEntity updateUser(@PathVariable Long id, @RequestBody UserEntity user) {
     user.setId(id);
     return userRepository.save(user);
   }
 
-  @DeleteMapping("/{id}")
+  @DeleteMapping("/users/{id}")
   public void deleteUser(@PathVariable Long id) {
     userRepository.deleteById(id);
   }
