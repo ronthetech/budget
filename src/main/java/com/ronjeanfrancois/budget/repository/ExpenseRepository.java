@@ -8,7 +8,6 @@ import com.ronjeanfrancois.budget.model.Expense;
 
 
 public interface ExpenseRepository extends JpaRepository<Expense, Long> {
-  Expense findByName(String name);
 
   Expense findByCategory(Category category);
 

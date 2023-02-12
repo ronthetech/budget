@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class ExpenseDto {
     private Long id;
 
-    private String name;
+    private String expenseName;
     private BigDecimal amount;
     private LocalDateTime expenseDate;
     private String description;

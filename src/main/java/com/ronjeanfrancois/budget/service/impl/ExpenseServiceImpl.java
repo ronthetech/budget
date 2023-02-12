@@ -22,18 +22,22 @@ public class ExpenseServiceImpl implements ExpenseService {
     @Override
     public ExpenseDto createExpense(ExpenseDto expenseDto){
         Expense expense = new Expense();
-        expense.setName(expense.getName());
+        expense.setExpenseName(expense.getExpenseName());
         expense.setAmount(expense.getAmount());
         expense.setDescription(expense.getDescription());
         expense.setExpenseDate(expense.getExpenseDate());
+        expense.setUser(expense.getUser());
+        expense.setCategory(expense.getCategory());
 
         Expense newExpense = expenseRepository.save(expense);
 
         ExpenseDto expenseResponse = new ExpenseDto();
-        expenseResponse.setName(newExpense.getName());
+        expenseResponse.setExpenseName(newExpense.getExpenseName());
         expenseResponse.setAmount(newExpense.getAmount());
         expenseResponse.setDescription(newExpense.getDescription());
         expenseResponse.setExpenseDate(newExpense.getExpenseDate());
+        expenseResponse.setUser(newExpense.getUser());
+        expenseResponse.setCategory(newExpense.getCategory());
 
         return expenseResponse;
     }
@@ -47,7 +51,7 @@ public class ExpenseServiceImpl implements ExpenseService {
     private ExpenseDto mapToDto(Expense expense){
         ExpenseDto expenseDto = new ExpenseDto();
         expenseDto.setId(expense.getId());
-        expenseDto.setName(expense.getName());
+        expenseDto.setExpenseName(expense.getExpenseName());
         expenseDto.setAmount(expense.getAmount());
         expenseDto.setDescription(expense.getDescription());
         expenseDto.setExpenseDate(expense.getExpenseDate());
@@ -59,7 +63,7 @@ public class ExpenseServiceImpl implements ExpenseService {
     private Expense mapToEntity(ExpenseDto expenseDto){
         Expense expense = new Expense();
         expense.setId(expenseDto.getId());
-        expense.setName(expenseDto.getName());
+        expense.setExpenseName(expenseDto.getExpenseName());
         expense.setAmount(expenseDto.getAmount());
         expense.setDescription(expenseDto.getDescription());
         expense.setExpenseDate(expenseDto.getExpenseDate());
