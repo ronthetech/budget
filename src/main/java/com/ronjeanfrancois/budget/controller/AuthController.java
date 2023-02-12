@@ -34,7 +34,11 @@ public class AuthController {
     private JWTGenerator jwtGenerator;
 
     @Autowired
-    public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder encoder, JWTGenerator jwtGenerator){
+    public AuthController(AuthenticationManager authenticationManager,
+                          UserRepository userRepository,
+                          RoleRepository roleRepository,
+                          PasswordEncoder encoder,
+                          JWTGenerator jwtGenerator){
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
@@ -52,7 +56,7 @@ public class AuthController {
         return new ResponseEntity<>(new AuthResponseDto(token),HttpStatus.OK);
     }
 
-    @PostMapping("/register")
+    @PostMapping("register")
     public ResponseEntity<String> register(@RequestBody RegisterDto registerDto){
         if(userRepository.existsByUsername(registerDto.getUsername())) {
             return new ResponseEntity<>("Username is taken!",HttpStatus.BAD_REQUEST);
