@@ -27,6 +27,7 @@ public class BudgetServiceImpl implements BudgetService {
         budget.setCategory(budget.getCategory());
         budget.setUser(budget.getUser());
         budget.setId(budget.getId());
+        budget.setExpenses(budget.getExpenses());
 
         Budget newBudget = budgetRepository.save(budget);
 
@@ -36,6 +37,7 @@ public class BudgetServiceImpl implements BudgetService {
         budgetResponse.setCategory(newBudget.getCategory());
         budgetResponse.setUser(newBudget.getUser());
         budgetResponse.setId(newBudget.getId());
+        budgetResponse.setExpenses(newBudget.getExpenses());
 
         return budgetResponse;
     }
@@ -53,6 +55,7 @@ public class BudgetServiceImpl implements BudgetService {
         budgetDto.setCategory(budget.getCategory());
         budgetDto.setUser(budget.getUser());
         budgetDto.setId(budget.getId());
+        budgetDto.setExpenses(budget.getExpenses());
 
         return budgetDto;
     }
@@ -64,6 +67,7 @@ public class BudgetServiceImpl implements BudgetService {
         budget.setCategory(budgetDto.getCategory());
         budget.setUser(budgetDto.getUser());
         budget.setId(budgetDto.getId());
+        budget.setExpenses(budgetDto.getExpenses());
 
         return budget;
     }
