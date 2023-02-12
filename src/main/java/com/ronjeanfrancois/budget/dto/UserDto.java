@@ -2,6 +2,7 @@ package com.ronjeanfrancois.budget.dto;
 
 import com.ronjeanfrancois.budget.model.Budget;
 import com.ronjeanfrancois.budget.model.Expense;
+import com.ronjeanfrancois.budget.model.Role;
 import lombok.Data;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 public class UserDto {
     private Long id;
 
-    private String userName;
+    private String username;
 
     private String email;
 
@@ -18,4 +19,5 @@ public class UserDto {
 
     private List<Expense> expenses;
     private List<Budget> budgets;
+    private List<Role> roles;
 }

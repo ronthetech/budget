@@ -1,5 +1,6 @@
 package com.ronjeanfrancois.budget.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -7,7 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Data
@@ -19,17 +20,23 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
-    private String userName;
-    @NotBlank
+    @NotBlank(message = "Username cannot be empty")
+    private String username;
+
     @Email
     private String email;
-    @NotBlank
+    @NotBlank(message = "Password cannot be empty")
     private String password;
 
-    @OneToMany(mappedBy = "user")
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private List<Role> roles = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
     private List<Expense> expenses;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
     private List<Budget> budgets;
 }

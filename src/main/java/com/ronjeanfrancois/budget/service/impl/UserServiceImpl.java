@@ -23,16 +23,24 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto createUser(UserDto userDto){
         UserEntity user = new UserEntity();
-        user.setUserName(user.getUserName());
+        user.setId(user.getId());
+        user.setUsername(user.getUsername());
         user.setEmail(user.getEmail());
         user.setPassword(user.getPassword());
+        user.setExpenses(user.getExpenses());
+        user.setBudgets(user.getBudgets());
+        user.setRoles(user.getRoles());
 
         UserEntity newUser = userRepository.save(user);
 
         UserDto userResponse = new UserDto();
         userResponse.setId(newUser.getId());
+        userResponse.setUsername(newUser.getUsername());
         userResponse.setEmail(newUser.getEmail());
         userResponse.setPassword(newUser.getPassword());
+        userResponse.setExpenses(newUser.getExpenses());
+        userResponse.setBudgets(newUser.getBudgets());
+        userResponse.setRoles(newUser.getRoles());
 
         return userResponse;
     }
@@ -46,20 +54,22 @@ public class UserServiceImpl implements UserService {
     private UserDto mapToDto(UserEntity user){
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
-        userDto.setUserName(user.getUserName());
+        userDto.setUsername(user.getUsername());
         userDto.setEmail(user.getEmail());
         userDto.setExpenses(user.getExpenses());
         userDto.setBudgets(user.getBudgets());
+        userDto.setRoles(user.getRoles());
         return userDto;
     }
 
     private UserEntity mapToEntity(UserDto userDto){
         UserEntity user = new UserEntity();
         user.setId(userDto.getId());
-        user.setUserName(userDto.getUserName());
+        user.setUsername(userDto.getUsername());
         user.setEmail(userDto.getEmail());
         user.setExpenses(userDto.getExpenses());
         user.setBudgets(userDto.getBudgets());
+        user.setRoles(userDto.getRoles());
         return user;
     }
 }
