@@ -23,7 +23,7 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryDto createCategory(CategoryDto categoryDto) {
         Category category = new Category();
         category.setId(category.getId());
-        category.setName(category.getName());
+        category.setCategoryName(category.getCategoryName());
         category.setDescription(category.getDescription());
         category.setExpenses(category.getExpenses());
         category.setBudget(category.getBudget());
@@ -32,7 +32,7 @@ public class CategoryServiceImpl implements CategoryService {
 
         CategoryDto categoryResponse = new CategoryDto();
         categoryResponse.setId(newCategory.getId());
-        categoryResponse.setName(newCategory.getName());
+        categoryResponse.setCategoryName(newCategory.getCategoryName());
         categoryResponse.setDescription(newCategory.getDescription());
         categoryResponse.setExpenses(newCategory.getExpenses());
         categoryResponse.setBudget(newCategory.getBudget());
@@ -49,7 +49,7 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryDto mapToDto(Category category){
         CategoryDto categoryDto = new CategoryDto();
         categoryDto.setId(category.getId());
-        categoryDto.setName(category.getName());
+        categoryDto.setCategoryName(category.getCategoryName());
         categoryDto.setDescription(category.getDescription());
         categoryDto.setExpenses(category.getExpenses());
         categoryDto.setBudget(category.getBudget());
@@ -60,7 +60,7 @@ public class CategoryServiceImpl implements CategoryService {
     private Category mapToEntity(CategoryDto categoryDto){
         Category category = new Category();
         category.setId(categoryDto.getId());
-        category.setName(categoryDto.getName());
+        category.setCategoryName(categoryDto.getCategoryName());
         category.setDescription(categoryDto.getDescription());
         category.setExpenses(categoryDto.getExpenses());
         category.setBudget(categoryDto.getBudget());

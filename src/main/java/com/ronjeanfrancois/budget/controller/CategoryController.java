@@ -30,11 +30,6 @@ public class CategoryController {
     return new ResponseEntity<List<CategoryDto>>(categoryService.getAllCategories(), HttpStatus.OK);
   }
 
-  @GetMapping("/categories/{name}")
-  public Category getCategoryByName(@PathVariable String name) {
-    return categoryRepository.findByName(name);
-  }
-
   @PostMapping("/categories")
   @ResponseStatus(HttpStatus.CREATED)
   public ResponseEntity<CategoryDto> createCategory(@RequestBody CategoryDto categoryDto) {

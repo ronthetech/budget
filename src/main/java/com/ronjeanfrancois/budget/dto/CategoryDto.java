@@ -11,7 +11,7 @@ public class CategoryDto {
 
     private Long id;
 
-    private String name;
+    private String categoryName;
     private String description;
 
     private List<Expense> expenses;
